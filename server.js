@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const compress = require('compress')
+const compression = require('compression')
 const ApiError = require('./utils/apiError');
 const app = express();
 require('dotenv').config();
@@ -12,7 +12,7 @@ connectDB();
 app.use(express.json());
 
 // compress request
-app.use(compress());
+app.use(compression());
 
 app.use('/api/auth', authRoute);
 
