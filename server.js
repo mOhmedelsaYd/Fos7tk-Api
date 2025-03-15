@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const ApiError = require('./utils/apiError');
 const app = express();
 require('dotenv').config();
 const connectDB = require('./config/db');
