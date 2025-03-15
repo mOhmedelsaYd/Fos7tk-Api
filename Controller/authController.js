@@ -6,15 +6,15 @@ const generateToken = require('../utils/generateToken');
 
 
 exports.register = asyncHandler(async (req, res, next) => {
-    const { name, email, password, phone } = req.body;
+    const { firstName, lastName, userName, email, password, phone } = req.body;
 
     // Create User
-    const user = await User.create({ name, email, password, phone });
+    const user = await User.create({ firstName, lastName, userName, email, password, phone });
 
     // Generate Token
     const token = generateToken(user._id)
 
-    res.status(201).json({ data: { name: user.name, email: user.email , phone :user.phone }, token });
+    res.status(201).json({ data: { name: user.firstName + " " + user.lastName, email: user.email , phone :user.phone }, token });
 })
 
 exports.login = asyncHandler(async (req, res, next) => {

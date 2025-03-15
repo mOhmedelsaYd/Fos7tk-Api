@@ -4,12 +4,30 @@ const validatorMiddleware = require('../../Midlleware/validatorMiddleware')
 const User = require('../../Model/User');
 
 exports.signupValidator = [
-  check('name')
+  check('firstName')
+    .notEmpty()
+    .withMessage('User required')
+    .isLength({ min: 3 })
+    .withMessage('Too short User name'),
+  
+  check('lastName')
+    .notEmpty()
+    .withMessage('User required')
+    .isLength({ min: 3 })
+    .withMessage('Too short User name'),
+  
+  check('userName')
     .notEmpty()
     .withMessage('User required')
     .isLength({ min: 3 })
     .withMessage('Too short User name')
-,
+    .custom((val) =>
+      User.findOne({ userName: val }).then((user) => {
+        if (user) {
+          return Promise.reject(new Error('user name already exists'));
+        }
+      })
+    ),
 
   check('email')
     .notEmpty()
@@ -28,17 +46,8 @@ exports.signupValidator = [
     .notEmpty()
     .withMessage('Password required')
     .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters')
-    .custom((password, { req }) => {
-      if (password !== req.body.passwordConfirm) {
-        throw new Error('Password Confirmation incorrect');
-      }
-      return true;
-    }),
+    .withMessage('Password must be at least 6 characters'),
 
-  check('passwordConfirm')
-    .notEmpty()
-    .withMessage('Password confirmation required'),
 
   validatorMiddleware,
 ];
