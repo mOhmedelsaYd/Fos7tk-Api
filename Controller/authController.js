@@ -14,7 +14,12 @@ exports.register = asyncHandler(async (req, res, next) => {
     // Generate Token
     const token = generateToken(user._id)
 
-    res.status(201).json({ data: { name: user.firstName + " " + user.lastName, email: user.email , phone :user.phone }, token });
+    res.status(201).json({
+        data: {
+            name: user.firstName + " " + user.lastName, email: user.email,
+            userName: user.userName, imageURL: user.imageURL, phone: user.phone
+        }, token
+    });
 })
 
 exports.login = asyncHandler(async (req, res, next) => {
