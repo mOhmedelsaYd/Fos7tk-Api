@@ -33,5 +33,9 @@ exports.login = asyncHandler(async (req, res, next) => {
 
     const token = generateToken(user._id);
 
-    res.status(200).json({ data: { name: user.name, email: user.email , phone :user.phone }, token});
+    res.status(200).json({
+        data: {
+            name: user.firstName + " " + user.lastName, email: user.email,
+            userName: user.userName, imageURL: user.imageURL, phone: user.phone
+        }, token});
 })
