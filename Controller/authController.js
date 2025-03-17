@@ -38,7 +38,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         data: {
             name: user.firstName + " " + user.lastName, email: user.email,
-            userName: user.userName, imageURL: user.imageURL, phone: user.phone
+            userName: user.userName, imageURL: user.imageURL, role: user.role, phone: user.phone
         }, token});
 })
 
