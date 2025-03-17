@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const compression = require('compression')
@@ -6,15 +7,20 @@ const app = express();
 require('dotenv').config();
 const connectDB = require('./config/db');
 const authRoute = require('./Route/authRoute');
+const planRoute = require('./Route/planRoute');
+const eventRoute = require('./Route/eventRoute');
 const globalError = require('./Midlleware/globalError')
 connectDB();
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 // compress request
 app.use(compression());
 
 app.use('/api/auth', authRoute);
+app.use('/api/plans', planRoute);
+app.use('/api/events', eventRoute);
 
 
 
