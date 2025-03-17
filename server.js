@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const compression = require('compression')
+const cors = require('cors');
 const ApiError = require('./utils/apiError');
 const app = express();
 require('dotenv').config();
@@ -14,6 +15,7 @@ connectDB();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(cors());
 
 // compress request
 app.use(compression());
