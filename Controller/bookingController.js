@@ -83,10 +83,10 @@ const confirmBooking = async (session) => {
 
 
 exports.webhookCheckout = asyncHandler(async (req, res, next) => {
-    const sig = req.headers["stripe-signature"];
+    const sig = req.headers['stripe-signature'];
     let event;
 
-    
+
     try {
         // ✅ Verify Stripe Webhook
         event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
