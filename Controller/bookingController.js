@@ -45,8 +45,8 @@ exports.createCheckoutSession = asyncHandler(async (req, res, next) => {
                 quantity: 1,
             },
         ],
-        success_url: `${req.protocol}://${req.get("host")}/bookings`,
-        cancel_url: `${req.protocol}://${req.get("host")}/plans`,
+        success_url: `${req.protocol}://${req.get("host")}/api/bookings`,
+        cancel_url: `${req.protocol}://${req.get("host")}/api/plans`,
         metadata: { userId: userId.toString(), userName, bookingType, referenceId }, // Include userName in metadata
     });
 
