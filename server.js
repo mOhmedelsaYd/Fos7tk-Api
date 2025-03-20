@@ -20,7 +20,7 @@ connectDB();
 app.use(compression());
 
 // webhook
-app.post('/api/bookings/webhook', express.raw({ type: 'application/json' }), webhookCheckout);
+app.post('/webhook-checkout', express.raw({ type: 'application/json' }), webhookCheckout);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
