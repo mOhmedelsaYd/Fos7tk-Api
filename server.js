@@ -10,6 +10,7 @@ const connectDB = require('./config/db');
 const authRoute = require('./Route/authRoute');
 const planRoute = require('./Route/planRoute');
 const eventRoute = require('./Route/eventRoute');
+const bookingRoute = require('./Route/bookingRoute');
 const globalError = require('./Midlleware/globalError')
 connectDB();
 
@@ -23,6 +24,7 @@ app.use(compression());
 app.use('/api/auth', authRoute);
 app.use('/api/plans', planRoute);
 app.use('/api/events', eventRoute);
+app.use('/api/bookings/', bookingRoute);
 
 
 
