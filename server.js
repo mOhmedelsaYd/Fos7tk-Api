@@ -11,27 +11,31 @@ const authRoute = require('./Route/authRoute');
 const planRoute = require('./Route/planRoute');
 const eventRoute = require('./Route/eventRoute');
 const bookingRoute = require('./Route/bookingRoute');
-const globalError = require('./Midlleware/globalError')
-connectDB();
+const globalError = require('./Midlleware/globalError');
+const { webhookCheckout } = require('./Controller/bookingController');
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'uploads')));
-app.use(cors());
+connectDB();
 
 // compress request
 app.use(compression());
 
-app.use('/api/auth', authRoute);
-app.use('/api/plans', planRoute);
-app.use('/api/events', eventRoute);
-app.use('/api/bookings/', bookingRoute);
+// webhook
+app.post('/api/bookings/webhook', express.raw({ type: 'application/json' }), webhookCheckout);
 
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(cors());
 
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
     console.log(`mode: ${process.env.NODE_ENV}`);
 }
+
+app.use('/api/auth', authRoute);
+app.use('/api/plans', planRoute);
+app.use('/api/events', eventRoute);
+app.use('/api/bookings/', bookingRoute);
 
 app.use('*', (req, res, next) => {
     next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
